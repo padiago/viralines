@@ -14,12 +14,13 @@ inventar_problema:
 crear_prompt_visual:
   description: >
     Toma el acertijo creado por la tarea anterior.
-    Escribe un PROMPT detallado en INGLÉS para un generador de imágenes.
+    1. Escribe un PROMPT detallado en INGLÉS para DALL-E 3.
+       - Estilo: Vectorial plano, fondo blanco, limpio.
+       - Disposición: Vertical.
+       - Describe objetos en filas según las ecuaciones.
+       - Solo números y signos (+, =, ?).
     
-    Instrucciones para el prompt:
-    - Estilo: Vectorial plano, fondo blanco, limpio.
-    - Disposición: Vertical.
-    - Asegúrate de describir qué objetos van en cada línea según las ecuaciones.
-    - NO incluyas texto complejo, solo números y signos (+, =, ?).
+    2. IMPORTANTE: Una vez tengas el prompt, USA LA HERRAMIENTA "Generador de Imágenes DALL-E 3" 
+    para crear el archivo de imagen real. Pásale el prompt que has escrito.
   expected_output: >
-    Un prompt de imagen en inglés optimizado para DALL-E 3.
+    La ruta del archivo de imagen generado (ej. viral_puzzle_2023...png).

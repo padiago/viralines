@@ -1,6 +1,7 @@
 import yaml
 from crewai import Agent
 from langchain_openai import ChatOpenAI
+from tools import ViralTools
 
 class ViralAgents:
     def __init__(self):
@@ -26,5 +27,6 @@ class ViralAgents:
             backstory=self.config['director_arte']['backstory'],
             verbose=True,
             allow_delegation=False,
-            llm=self.llm
+            llm=self.llm,
+            tools=[ViralTools().generar_imagen_dalle]
         )
