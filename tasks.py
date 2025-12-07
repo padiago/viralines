@@ -1,0 +1,36 @@
+from crewai import Task
+
+class ViralTasks:
+
+    def task_inventar_problema(self, agent):
+        return Task(
+            description="""
+            1. Elige un tema aleatorio (ej. herramientas, comida, juguetes).
+            2. Crea 3 variables (Objeto A, Objeto B, Objeto C).
+            3. Define sus valores numéricos (enteros positivos).
+            4. Escribe 3 ecuaciones:
+               - Ecuación 1: Suma de 3 Objetos A.
+               - Ecuación 2: Objeto A + Objeto B + Objeto B.
+               - Ecuación 3 (La pregunta): Objeto B + Objeto C x Objeto A (¡Ojo a la jerarquía de operaciones!).
+            5. Entrega el resultado con la solución explicada.
+            """,
+            expected_output="Un documento de texto con las variables, sus valores y las 3 ecuaciones escritas.",
+            agent=agent
+        )
+
+    def task_crear_prompt_visual(self, agent, context_task):
+        return Task(
+            description="""
+            Toma el acertijo creado por la tarea anterior.
+            Escribe un PROMPT detallado en INGLÉS para un generador de imágenes.
+            
+            Instrucciones para el prompt:
+            - Estilo: Vectorial plano, fondo blanco, limpio.
+            - Disposición: Vertical.
+            - Asegúrate de describir qué objetos van en cada línea según las ecuaciones.
+            - NO incluyas texto complejo, solo números y signos (+, =, ?).
+            """,
+            expected_output="Un prompt de imagen en inglés optimizado para DALL-E 3.",
+            agent=agent,
+            context=[context_task] # Aquí conectamos la tarea anterior
+        )

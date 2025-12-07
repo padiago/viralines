@@ -1,0 +1,31 @@
+from crewai import Agent
+from langchain_openai import ChatOpenAI
+
+class ViralAgents:
+    def __init__(self):
+        # Inicializamos el cerebro aquí para reutilizarlo
+        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
+
+    def matematico_agent(self):
+        return Agent(
+            role='Diseñador de Acertijos Lógicos',
+            goal='Crear un sistema de 3 ecuaciones simples con objetos visuales y una única solución numérica.',
+            backstory="""Eres un experto en crear acertijos virales. 
+            Sabes combinar objetos cotidianos (frutas, animales, ropa) con números.
+            Tu prioridad es que la matemática sea CORRECTA y tenga una sola solución.""",
+            verbose=True,
+            allow_delegation=False,
+            llm=self.llm
+        )
+
+    def director_creativo_agent(self):
+        return Agent(
+            role='Director Creativo de IA',
+            goal='Describir una imagen visualmente atractiva basada en un acertijo matemático.',
+            backstory="""Tu trabajo es traducir ecuaciones aburridas en descripciones (prompts) 
+            para que una IA de dibujo (como DALL-E 3) pueda crearlas. 
+            Eres muy detallista con la composición visual.""",
+            verbose=True,
+            allow_delegation=False,
+            llm=self.llm
+        )
