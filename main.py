@@ -10,34 +10,36 @@ from tasks import ViralTasks
 load_dotenv()
 
 def run():
-    # 1. Instanciar (crear) las fábricas de agentes y tareas
     agents = ViralAgents()
     tasks = ViralTasks()
 
-    # 2. Crear los agentes específicos
+    # 1. Crear Agentes
     matematico = agents.matematico_agent()
     director = agents.director_creativo_agent()
+    redactor = agents.redactor_social_agent() # <-- NUEVO FICHAJE
 
-    # 3. Crear las tareas y asignarles los agentes
-    tarea1_logica = tasks.task_inventar_problema(matematico)
-    tarea2_visual = tasks.task_crear_prompt_visual(director, tarea1_logica)
+    # 2. Crear Tareas
+    tarea_logica = tasks.task_inventar_problema(matematico)
+    tarea_visual = tasks.task_crear_prompt_visual(director, tarea_logica)
+    
+    # El redactor necesita saber qué pensó el matemático y qué pidió el director
+    tarea_redaccion = tasks.task_redactar_caption(redactor, [tarea_logica, tarea_visual])
 
-    # 4. Formar el equipo (Crew)
+    # 3. Formar el Crew
     equipo = Crew(
-        agents=[matematico, director],
-        tasks=[tarea1_logica, tarea2_visual],
+        agents=[matematico, director, redactor],
+        tasks=[tarea_logica, tarea_visual, tarea_redaccion],
         verbose=True,
         process=Process.sequential
     )
 
-    # 5. Ejecutar
-    print("🤖 Iniciando workflow modular...")
+    # 4. Ejecutar
+    print("🤖 Generando contenido viral completo...")
     resultado = equipo.kickoff()
     
-    print("\n\n########################")
-    print("## RESULTADO FINAL ##")
+    print("\n########################")
+    print("## PROCESO TERMINADO ##")
     print("########################\n")
-    print(resultado)
 
 # Esto es una buena práctica: asegura que el código solo corre si ejecutas este archivo directamente
 if __name__ == "__main__":

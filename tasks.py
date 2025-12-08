@@ -21,3 +21,12 @@ class ViralTasks:
             agent=agent,
             context=[context_task]
         )
+    
+    def task_redactar_caption(self, agent, context_tasks):
+        return Task(
+            description=self.config['redactar_caption']['description'],
+            expected_output=self.config['redactar_caption']['expected_output'],
+            agent=agent,
+            context=context_tasks, # Le pasamos TODO el contexto anterior
+            output_file='caption_post.txt' # <-- ¡OJO! Esto guarda el archivo automáticamente
+        )

@@ -24,3 +24,15 @@ crear_prompt_visual:
     para crear el archivo de imagen real. Pásale el prompt que has escrito.
   expected_output: >
     La ruta del archivo de imagen generado (ej. viral_puzzle_2023...png).
+
+redactar_caption:
+  description: >
+    Usando el acertijo matemático original y la imagen generada, escribe el texto para la publicación.
+    
+    Debes generar dos versiones:
+    1. Versión Instagram: Con emojis, saltos de línea y hashtags relevantes (#BrainTeaser, #Puzzle, etc).
+    2. Versión Twitter (X): Corta, directa y provocativa.
+    
+    Incluye la PREGUNTA final clara, pero NO des la solución en el texto visible (ponla abajo del todo oculta como "Spoiler").
+  expected_output: >
+    Un archivo de texto llamado 'caption_post.txt' que contenga las dos versiones listas para publicar.

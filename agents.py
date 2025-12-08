@@ -30,3 +30,13 @@ class ViralAgents:
             llm=self.llm,
             tools=[ViralTools().generar_imagen_dalle]
         )
+    
+    def redactor_social_agent(self):
+        return Agent(
+            role=self.config['redactor_social']['role'],
+            goal=self.config['redactor_social']['goal'],
+            backstory=self.config['redactor_social']['backstory'],
+            verbose=True,
+            allow_delegation=False,
+            llm=self.llm
+        )
