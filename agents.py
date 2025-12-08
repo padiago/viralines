@@ -38,5 +38,7 @@ class ViralAgents:
             backstory=self.config['redactor_social']['backstory'],
             verbose=True,
             allow_delegation=False,
-            llm=self.llm
+            llm=self.llm,
+            tools=[ViralTools().enviar_telegram]
         )
+    

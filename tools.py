@@ -3,6 +3,10 @@ import requests
 from datetime import datetime
 from crewai_tools import tool
 from openai import OpenAI
+from dotenv import load_dotenv # <--- 1. IMPORTANTE
+
+# 2. CARGAR VARIABLES DE ENTORNO
+load_dotenv()
 
 class ViralTools:
     
@@ -13,13 +17,11 @@ class ViralTools:
         Recibe un prompt de texto, genera la imagen con DALL-E 3, 
         la guarda localmente y devuelve la ruta del archivo.
         """
-        print(f"🎨 PINTANDO: {prompt[:50]}...") # Log para que veas que funciona
+        print(f"🎨 PINTANDO: {prompt[:50]}...") 
 
-        # 1. Configurar cliente (toma la clave del .env automáticamente)
-        client = OpenAI()
+        client = OpenAI() # Toma la clave automáticamente gracias a load_dotenv()
 
         try:
-            # 2. Solicitar la imagen a OpenAI
             response = client.images.generate(
                 model="dall-e-3",
                 prompt=prompt,
@@ -28,17 +30,12 @@ class ViralTools:
                 n=1,
             )
 
-            # 3. Obtener la URL de la imagen generada
             image_url = response.data[0].url
-
-            # 4. Descargar la imagen
             img_data = requests.get(image_url).content
 
-            # 5. Generar nombre de archivo único (con fecha y hora)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"viral_puzzle_{timestamp}.png"
             
-            # 6. Guardar en disco
             with open(filename, 'wb') as handler:
                 handler.write(img_data)
             
@@ -46,3 +43,36 @@ class ViralTools:
 
         except Exception as e:
             return f"Error al generar imagen: {str(e)}"
+    
+    @tool("Notificador de Telegram")
+    def enviar_telegram(ruta_imagen: str, texto_caption: str):
+        """
+        Envía una foto local y un texto a un chat de Telegram.
+        Args:
+            ruta_imagen: La ruta del archivo .png en el ordenador.
+            texto_caption: El texto que acompañará a la foto.
+        """
+        # Ahora sí encontrará las claves porque hicimos load_dotenv() arriba
+        token = os.getenv('TELEGRAM_TOKEN')
+        chat_id = os.getenv('TELEGRAM_CHAT_ID')
+        
+        if not token or not chat_id:
+            return "Error: Faltan credenciales de Telegram en .env"
+
+        url = f"https://api.telegram.org/bot{token}/sendPhoto"
+        
+        try:
+            # Abrimos la imagen en modo lectura binaria ('rb')
+            with open(ruta_imagen, 'rb') as foto:
+                payload = {'chat_id': chat_id, 'caption': texto_caption}
+                files = {'photo': foto}
+                
+                resp = requests.post(url, data=payload, files=files)
+                
+            if resp.status_code == 200:
+                return "Notificación enviada a Telegram con éxito."
+            else:
+                return f"Error Telegram: {resp.text}"
+                
+        except Exception as e:
+            return f"Error enviando a Telegram: {str(e)}"

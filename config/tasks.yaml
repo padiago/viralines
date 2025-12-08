@@ -34,5 +34,9 @@ redactar_caption:
     2. Versión Twitter (X): Corta, directa y provocativa.
     
     Incluye la PREGUNTA final clara, pero NO des la solución en el texto visible (ponla abajo del todo oculta como "Spoiler").
+    
+    3. IMPORTANTE: Usa la herramienta "Notificador de Telegram".
+       - En 'ruta_imagen', pon el nombre del archivo .png que generó el Director Creativo.
+       - En 'texto_caption', pon el texto que acabas de redactar.
   expected_output: >
-    Un archivo de texto llamado 'caption_post.txt' que contenga las dos versiones listas para publicar.
+    Confirmación de que el mensaje ha llegado a Telegram.
